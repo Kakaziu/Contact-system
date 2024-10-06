@@ -1,0 +1,7 @@
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.AssemblyInfoInputs.cache
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.AssemblyInfo.cs
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.csproj.CoreCompileInputs.cache
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.RazorAssemblyInfo.cache
+C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\obj\Debug\net8.0\ContactSystem.RazorAssemblyInfo.cs
