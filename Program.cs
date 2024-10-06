@@ -1,3 +1,6 @@
+using ContactSystem.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ContactSystem
 {
     public class Program
@@ -5,6 +8,10 @@ namespace ContactSystem
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddEntityFrameworkSqlServer()
+               .AddDbContext<ContactSystemDBContext>(
+                   options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database"))
+               );
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
