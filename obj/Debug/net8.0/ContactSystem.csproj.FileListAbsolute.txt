@@ -52,7 +52,6 @@ C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\Sys
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\System.Security.Permissions.dll
-C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\System.Windows.Extensions.dll
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\kauab\c_sharp_projects\ContactSystem\ContactSystem\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
