@@ -46,5 +46,26 @@ namespace ContactSystem.Controllers
 
             return View(obj);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var obj = await _contactService.FindById(id.Value);
+
+            if (obj == null) return NotFound();
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _contactService.Remove(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
