@@ -67,5 +67,26 @@ namespace ContactSystem.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var obj = await _contactService.FindById(id.Value);
+
+            if (obj == null) return NotFound();
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Contact contact, int id)
+        {
+            await _contactService.Update(contact, id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
