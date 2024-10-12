@@ -1,6 +1,8 @@
 ﻿using ContactSystem.Models;
+using ContactSystem.Models.ViewModels;
 using ContactSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace ContactSystem.Controllers
 {
@@ -38,11 +40,11 @@ namespace ContactSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction(nameof(Error), new { message = "Id not provide" });
 
             var obj = await _contactService.FindById(id.Value);
 
-            if (obj == null) return NotFound();
+            if (obj == null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
             return View(obj);
         }
@@ -50,11 +52,11 @@ namespace ContactSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction(nameof(Error), new { message = "Id not provide" });
 
             var obj = await _contactService.FindById(id.Value);
 
-            if (obj == null) return NotFound();
+            if (obj == null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
             return View(obj);
         }
@@ -71,11 +73,11 @@ namespace ContactSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction(nameof(Error), new { message = "Id not provide" });
 
             var obj = await _contactService.FindById(id.Value);
 
-            if (obj == null) return NotFound();
+            if (obj == null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
             return View(obj);
         }
@@ -84,9 +86,28 @@ namespace ContactSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Contact contact, int id)
         {
-            await _contactService.Update(contact, id);
+            if(contact.Id != id) return RedirectToAction(nameof(Error), new { message = "The parameter id is not the same as the object id" });
+            
+            try
+            {
+                await _contactService.Update(contact, id);
+                return RedirectToAction(nameof(Index));
+            } catch (ApplicationException ex)
+            {
+                return RedirectToAction(nameof(Error), new { message = ex.Message });
+            }
+        }
 
-            return RedirectToAction(nameof(Index));
+        [HttpGet]
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel()
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }

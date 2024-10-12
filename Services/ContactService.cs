@@ -1,5 +1,6 @@
 ﻿using ContactSystem.Data;
 using ContactSystem.Models;
+using ContactSystem.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContactSystem.Services
@@ -32,31 +33,29 @@ namespace ContactSystem.Services
         {
             var contact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (contact == null) throw new Exception("Contato não encontrado.");
-
             return contact;
         }
 
         public async Task<Contact> Update(Contact contact, int id)
         {
-            var newContact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == id);
+            if (!_dbContext.Contacts.Any(x => x.Id == id))
+                throw new NotFoundException("Id not found.");
 
-            if (newContact == null) throw new Exception("Contato não encontrado.");
+            try
+            {
+                _dbContext.Update(contact);
+                await _dbContext.SaveChangesAsync();
 
-            newContact.Name = contact.Name;
-            newContact.Email = contact.Email;
-            newContact.PhoneNumber = contact.PhoneNumber;
-            _dbContext.Update(newContact);
-            await _dbContext.SaveChangesAsync();
-
-            return newContact;
+                return contact;
+            } catch (DbUpdateConcurrencyException ex)
+            {
+                throw new DbConcurrencyException(ex.Message);
+            }
         } 
 
         public async Task<Contact> Remove(int id)
         {
-            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (contact == null) throw new Exception("Contato não encontrado.");
+            var contact = await FindById(id);
 
             _dbContext.Remove(contact);
             await _dbContext.SaveChangesAsync();
