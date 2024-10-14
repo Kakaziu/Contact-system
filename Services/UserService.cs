@@ -30,6 +30,7 @@ namespace ContactSystem.Services
 
         public async Task<User> Insert(User user)
         {
+            user.CreatedAt = DateTime.Now;
             await _dbContext.Users.AddAsync(user);
             await _dbContext.Users.SingleAsync();
 
@@ -51,12 +52,19 @@ namespace ContactSystem.Services
             if (!_dbContext.Users.Any(x => x.Id == id))
                 throw new NotFoundException("Id not found");
 
+            User userDB = await FindById(id);
+
+            userDB.Name = user.Name;
+            userDB.Email = user.Email;
+            userDB.Login = user.Login;
+            userDB.UpdateAt = DateTime.Now;
+
             try
             {
-                _dbContext.Users.Update(user);
+                _dbContext.Users.Update(userDB);
                 await _dbContext.SaveChangesAsync();
 
-                return user;
+                return userDB;
             } catch(DbUpdateConcurrencyException ex)
             {
                 throw new DbConcurrencyException(ex.Message);

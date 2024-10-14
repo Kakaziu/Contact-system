@@ -17,6 +17,7 @@ namespace ContactSystem
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ContactService>();
+            builder.Services.AddScoped<UserService>();
 
             var app = builder.Build();
 
