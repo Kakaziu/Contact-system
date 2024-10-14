@@ -32,7 +32,7 @@ namespace ContactSystem.Services
         {
             user.CreatedAt = DateTime.Now;
             await _dbContext.Users.AddAsync(user);
-            await _dbContext.Users.SingleAsync();
+            await _dbContext.SaveChangesAsync();
 
             return user;
         }
