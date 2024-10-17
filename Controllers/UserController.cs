@@ -27,5 +27,12 @@ namespace ContactSystem.Controllers
 
             return RedirectToAction("Index", "Contact");
         }
+
+        public async Task<IActionResult> Index()
+        {
+            var users = await _userService.FindAll();
+
+            return View(users);
+        }
     }
 }
