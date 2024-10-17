@@ -14,6 +14,15 @@ namespace ContactSystem.Services
             _dbContext = dbContext;
         }
 
+        public async Task<User> FindByLogin(string login)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => (string.IsNullOrEmpty(x.Login)) || x.Login == login);
+
+            if (user == null) throw new NotFoundException("Usuário não encontrado.");
+
+            return user;
+        }
+
          public async Task<List<User>> FindAll()
         {
             var users = await _dbContext.Users.ToListAsync();
