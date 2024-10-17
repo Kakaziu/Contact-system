@@ -38,7 +38,7 @@ namespace ContactSystem
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Contact}/{action=Index}/{id?}");
 
             app.Run();
         }
