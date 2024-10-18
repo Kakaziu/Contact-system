@@ -1,4 +1,5 @@
-﻿using ContactSystem.Models;
+﻿using ContactSystem.Helpers;
+using ContactSystem.Models;
 using ContactSystem.Models.ViewModels;
 using ContactSystem.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,26 @@ namespace ContactSystem.Controllers
     public class LoginController : Controller
     {
         private readonly UserService _userService;
+        private readonly Session _session;
 
-        public LoginController(UserService userService)
+        public LoginController(UserService userService, Session session)
         {
             _userService = userService;
+            _session = session;
         }
 
         public IActionResult Index()
         {
+            if (_session.GetUserSession() != null) return RedirectToAction("Index", "Contact");
+
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            _session.RemoveUserSession();
+
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
@@ -30,6 +42,7 @@ namespace ContactSystem.Controllers
 
                 if(user.IsPasswordValid(loginModel.Password))
                 {
+                    _session.CreateUserSession(user);
                     return RedirectToAction("Index", "Contact");
                 }
 
